@@ -3,9 +3,10 @@ variable "aws_region" {
   type        = string
 }
 
-variable "deployment_role_arn" {
-  description = "Existing role assumed by Terraform in the target account."
-  type        = string
+variable "assume_deployment_role" {
+  description = "Assume the deployment role created by this configuration. Keep false for the initial bootstrap apply."
+  type        = bool
+  default     = false
 }
 
 variable "session_name" {
@@ -18,17 +19,6 @@ variable "operating_system" {
   description = "Operating-system family for the patch baseline."
   type        = string
   default     = "AMAZON_LINUX_2"
-}
-
-variable "patch_group" {
-  description = "Value identifying instances assigned to this patch group."
-  type        = string
-}
-
-variable "patch_group_tag_key" {
-  description = "Tag key used to discover managed nodes for this patch group."
-  type        = string
-  default     = "PatchGroup"
 }
 
 variable "patch_filters" {
@@ -70,11 +60,6 @@ variable "cutoff" {
   description = "Hours before the window ends when new tasks stop starting."
   type        = number
   default     = 1
-}
-
-variable "maintenance_window_role_arn" {
-  description = "Existing IAM service role used by the maintenance-window task."
-  type        = string
 }
 
 variable "max_concurrency" {
