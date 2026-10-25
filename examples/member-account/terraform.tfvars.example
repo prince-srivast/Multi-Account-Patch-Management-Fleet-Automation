@@ -1,0 +1,16 @@
+aws_region                 = "us-east-1"
+assume_deployment_role      = false
+session_name                = "fleet-patch-deployment"
+
+name_prefix                 = "fleet-patch"
+operating_system            = "AMAZON_LINUX_2"
+patch_group                 = "fleet-patch-test"
+patch_group_tag_key         = "PatchGroup"
+maintenance_window_schedule = "cron(0 3 ? * SUN *)"
+notification_email          = ""
+
+tags = {
+  Project     = "fleet-patch-management"
+  Environment = "production"
+  ManagedBy   = "Terraform"
+}

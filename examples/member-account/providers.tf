@@ -12,12 +12,30 @@ terraform {
 provider "aws" {
   region = var.aws_region
 
-  assume_role {
-    role_arn     = var.deployment_role_arn
-    session_name = var.session_name
+  dynamic "assume_role" {
+    for_each = var.assume_deployment_role ? [local.deployment_role_arn] : []
+
+    content {
+      role_arn     = assume_role.value
+      session_name = var.session_name
+    }
   }
 
   default_tags {
     tags = var.tags
   }
+}
+
+provider "aws" {
+  alias  = "bootstrap"
+  region = var.aws_region
+}
+
+data "aws_caller_identity" "bootstrap" {
+  provider = aws.bootstrap
+}
+
+data "aws_iam_session_context" "bootstrap" {
+  provider = aws.bootstrap
+  arn      = data.aws_caller_identity.bootstrap.arn
 }

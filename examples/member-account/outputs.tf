@@ -8,6 +8,16 @@ output "maintenance_window_id" {
   value       = module.maintenance_window.maintenance_window_id
 }
 
+output "deployment_role_arn" {
+  description = "IAM role ARN Terraform can assume after the initial bootstrap apply."
+  value       = module.iam.deployment_role_arn
+}
+
+output "maintenance_window_role_arn" {
+  description = "IAM service role ARN used by the maintenance-window task."
+  value       = module.iam.maintenance_window_role_arn
+}
+
 output "notification_topic_arn" {
   description = "SNS topic ARN receiving maintenance-window state-change events."
   value       = module.notifications.topic_arn
